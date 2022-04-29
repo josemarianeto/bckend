@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  web:
+    image: node:16
+    container_name: backendteste
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: bash -c "yarn install && yarn prisma db push && yarn testing && yarn dev"
+    ports:
+      - 3343:3343
+    depends_on:
+      - db
+  db:
+    container_name: backendtestedb
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
